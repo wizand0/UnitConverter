@@ -1,5 +1,6 @@
 package ru.wizand0.unitconverter;
 
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Button btn;
     TextView textView;
+    Button btnclear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         editText = findViewById(R.id.editText);
         btn = findViewById(R.id.btn);
+        btnclear = findViewById(R.id.btnclear);
         textView = findViewById(R.id.textview);
 
 
@@ -40,25 +43,46 @@ public class MainActivity extends AppCompatActivity {
                 String inputText = editText.getText().toString();
 
                 //Converting a string into double
-                double kilos = Double.parseDouble(inputText);
+                double kilos = 0;
+                try
+                {
+                    kilos = Double.parseDouble(inputText);
+                    editText.setText("");
+                    //Converting kilos into pounds
+                    double pounds = makeConversion(kilos);
+                    //Display result
+                    textView.setText("" + pounds);
+                }
+                catch(NumberFormatException e)
+                {
+                    editText.setText("");
+                    textView.setText("Not valid number");
+                }
 
-                //Converting kilos into pounds
-                double pounds = makeConversion(kilos);
 
-                //Display result
 
-                textView.setText("" + pounds);
+            }
+        });
+        btnclear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Clear result
+
+                textView.setText("0");
+                editText.setText("");
 
 
             }
         });
 
 
+
     }
 
     public double makeConversion(double kilos){
         // 1 kilo = 2.20462 pounds
-        return kilos * 2.20462;
+        return Math.round(kilos * 2.20462 * 100.0) / 100.0;
     }
 
 
