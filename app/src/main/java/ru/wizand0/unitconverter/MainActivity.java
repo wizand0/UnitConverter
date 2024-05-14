@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     //Converting kilos into pounds
                     double pounds = makeConversion(kilos);
                     //Display result
-                    textView.setText("" + pounds + "pounds");
+                    textView.setText("" + pounds + " lb");
                 }
                 catch(NumberFormatException e)
                 {
