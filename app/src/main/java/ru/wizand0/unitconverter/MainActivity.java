@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Button btn;
     TextView textView;
+    TextView textView4;
     Button btnclear;
+    Button btnswitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,35 @@ public class MainActivity extends AppCompatActivity {
         btn = findViewById(R.id.btn);
         btnclear = findViewById(R.id.btnclear);
         textView = findViewById(R.id.textview);
+        btnswitch = findViewById(R.id.btnswitch);
+        textView4 = findViewById(R.id.textView4);
+
+        final int[] switch_status = {1};
 
 
+
+
+        btnswitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Clear result
+
+                if (switch_status[0] == 1) {
+                    textView4.setText("Converting pounds to kilos");
+                    btn.setText("Convert pounds to kilos");
+                    switch_status[0] = 0;
+                }
+                //if (switch_status[0] == 1) {
+                else {
+                    textView4.setText("Converting kilos to pounds");
+                    btn.setText("Convert kilos to pounds");
+                    switch_status[0] = 1;
+                }
+
+
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,9 +78,19 @@ public class MainActivity extends AppCompatActivity {
                     kilos = Double.parseDouble(inputText);
                     editText.setText("");
                     //Converting kilos into pounds
-                    double pounds = makeConversion(kilos);
-                    //Display result
-                    textView.setText("" + pounds + " lb");
+                    if (switch_status[0] == 1) {
+                        double pounds = makeConversion(kilos);
+                        //Display result
+                        textView.setText("" + pounds + " lb");
+                    }
+                    //if (switch_status[0] == 0) {
+                    else {
+                        double pounds = makeReverseConversion(kilos);
+                        //Display result
+                        textView.setText("" + pounds + " kg");
+                    }
+
+
                 }
                 catch(NumberFormatException e)
                 {
@@ -83,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
     public double makeConversion(double kilos){
         // 1 kilo = 2.20462 pounds
         return Math.round(kilos * 2.20462 * 100.0) / 100.0;
+    }
+    public double makeReverseConversion(double kilos){
+        // 1 kilo = 2.20462 pounds
+        return Math.round(kilos * 0.4095 * 100.0) / 100.0;
     }
 
 
