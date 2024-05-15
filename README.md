@@ -3,5 +3,5 @@
 ## Convert kilos to pounds
 
 ## TODO:
-- check "." and ","
-- check proper symbols
+- ~~check "." and ","~~
+- ~~check proper symbols~~
